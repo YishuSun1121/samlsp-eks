@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saml2sp-deployment
+  namespace: saml2sp
+  labels:
+    app: saml2sp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: saml2sp
+  template:
+    metadata:
+      labels:
+        app: saml2sp
+    spec:
+      containers:
+        - name: saml2sp
+          image: 272778956077.dkr.ecr.us-east-1.amazonaws.com/sprepo:latest
+          env:
+            - name: PROFILE
+              value: ec2-nextjump
+          ports:
+            - name: http
+              containerPort: 8080
+          imagePullPolicy: Always

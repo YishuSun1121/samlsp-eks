@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: saml2sp-service
+  namespace: saml2sp
+  labels:
+    app: saml2sp
+spec:
+  selector:
+    app: saml2sp
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

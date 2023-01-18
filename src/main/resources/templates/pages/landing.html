@@ -1,0 +1,57 @@
+<!doctype html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+>
+
+<body>
+<!-- Content starts -->
+<section class="my-3 p-3 bg-white rounded box-shadow" layout:fragment="content">
+    <div id="debug-panel" style="display:none">
+        <div class="alert alert-success" role="alert">
+            <small><strong>Well done!</strong> Aww yeah, you successfully logged in.<br/>
+                Your SAML 2.0 authentication process works fine.</small>
+        </div>
+        <!--      <p><img class="img-fluid" th:src="@{/img/nyan-cat.png}" /></p>-->
+        <p>You are logged as <span class="badge badge-dark" th:text="${username}">null</span>.</p>
+        <input type="hidden" id="idpDebugging" th:value="${idpDebugging}">
+        <form id="sso" name="sso" method="post" action="https://www.perksatwork.com/gateway/saml2">
+            <div>
+                <input type="text" name="samlresponse" th:value="${encData}" placeholder="copy encData"
+                       style="padding:10px;width:100%">
+            </div>
+            <div class="text-right mt-1">
+                <button type="submit">Submit To Perksatwork</button>
+            </div>
+        </form>
+        <small class="d-block text-right mt-3" id="sso-btn">
+            <a th:href="@{/saml/logout}" class="btn btn-spring btn-sm">
+                <i class="far fa-user-circle"></i> Global logout
+            </a>
+            <a th:href="@{/saml/logout?local=true}" class="btn btn-spring btn-sm">
+                <i class="fas fa-sign-out-alt"></i> Local logout
+            </a>
+        </small>
+    </div>
+    <div id="normal-panel">
+        <div class="alert alert-success" role="alert">
+            Loading...
+        </div>
+    </div>
+    <script>
+        const debug = localStorage.getItem('debug');
+        const idpDebugging = document.getElementById('idpDebugging').value;
+        if((debug && debug == 'true') || idpDebugging == 'true'){
+            document.getElementById('debug-panel').style.display = 'block';
+            document.getElementById('normal-panel').style.display = 'none';
+        }else{
+            document.getElementById('sso').submit();
+        }
+    </script>
+</section>
+<!-- Content ends -->
+</body>
+
+</html>
