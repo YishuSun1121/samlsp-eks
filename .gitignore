@@ -48,5 +48,4 @@ data.mv.db
 data.trace.db
 ${sys:LOG_PATH}
 src/main/resources/metadata/
-metadata/
 !src/main/java/com/nextjump/saml2/ext/log
